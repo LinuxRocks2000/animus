@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Animus maker I guess</title>
+    </head>
+    <body>
+        Name: <input type="text" id="name"></input><br>
+        Nicknames (comma separate): <input type="text" id="nicks"></input><br>
+        Alignment: <select id="alignment"><option value="0">Neutral</option><option value="1">Enemy</option><option value="2">Ally</option></select><br>
+        Powers:
+        <ul>
+            <li>
+                Telekenetic: <input type="text" id="telekenetic" value="NO"></input>
+            </li>
+            <li>
+                Telepathic: <input type="text" id="telepathic" value="NO"></input>
+            </li>
+            <li>
+                Telechronic: <input type="text" id="telechronic" value="NO"></input>
+            </li>
+        </ul>
+        Notes:<br>
+        <textarea id="notes" rows="8" cols="80"></textarea><br><br>
+        <button id="submit" onclick="submit()">Done</button>
+        <script type="text/javascript">
+            function submit(){
+                var url = "index.html#";
+                url += encodeURIComponent(document.getElementById("name").value);
+                url += "~";
+                url += encodeURIComponent(document.getElementById("nicks").value);
+                url += "~";
+                url += document.getElementById("alignment").value;
+                url += document.getElementById("telekenetic").value;
+                url += "~";
+                url += document.getElementById("telepathic").value;
+                url += "~";
+                url += document.getElementById("telechronic").value;
+                url += "~";
+                url += encodeURIComponent(document.getElementById("notes").value);
+                window.location.href = url;
+            }
+        </script>
+    </body>
+</html>
