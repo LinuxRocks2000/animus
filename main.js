@@ -22,9 +22,9 @@ hash.read(); // Purge the "#" symbol
 name = decodeURIComponent(hash.readUntil("~"));
 akas = [decodeURIComponent(hash.readUntil("~"))];
 alignment = hash.read();
-powers.telekenetic = decodeURIComponent(hash.readUntil("~"));
-powers.telepathic = decodeURIComponent(hash.readUntil("~"));
-powers.telechronic = decodeURIComponent(hash.readUntil("~"));
+Object.keys(powers).forEach((item, i) => {
+    powers[item] = decodeURIComponent(hash.readUntil("~"));
+});
 notes = decodeURIComponent(hash.readRemaining());
 
 function resize(){
