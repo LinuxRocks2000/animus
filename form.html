@@ -42,6 +42,7 @@
 
             Object.keys(powers).forEach((item, i) => {
                 powers[item] = decodeURIComponent(hash.readUntil("~"));
+                document.getElementById(item).value = powers[item];
             });
             document.getElementById("notes").value = decodeURIComponent(hash.readUntil("~"));
             var imgURL = hash.readRemaining();
