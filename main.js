@@ -11,11 +11,13 @@ var alignment = 2;
 var powers = {
     "telekenetic": "N/A",
     "telepathic": "N/A",
-    "telechronic": "N/a"
+    "telechronic": "N/A"
 };
 
 var cW = 0;
 var cH = 0;
+
+document.getElementById("cardedit").href += window.location.hash;
 
 var hash = new StringStream(window.location.hash);
 hash.read(); // Purge the "#" symbol
@@ -25,7 +27,10 @@ alignment = hash.read();
 Object.keys(powers).forEach((item, i) => {
     powers[item] = decodeURIComponent(hash.readUntil("~"));
 });
-notes = decodeURIComponent(hash.readRemaining());
+notes = decodeURIComponent(hash.readUntil("~"));
+var imgURL = hash.readRemaining();
+var img = new Image();
+img.src = imgURL;
 
 function resize(){
     canvas.width = cW;
@@ -92,10 +97,11 @@ function loop(){
 
     ctx.fillStyle = "grey";
     ctx.fillRect(15, 15, 50, 50);
-    ctx.fillStyle = "white";
-    ctx.fillText("images", 15, 25);
-    ctx.fillText("coming", 15, 36);
-    ctx.fillText("soon", 15, 48);
+    ctx.drawImage(img, 15, 15, 50, 50);
+    //ctx.fillStyle = "white";
+    //ctx.fillText("images", 15, 25);
+    //ctx.fillText("coming", 15, 36);
+    //ctx.fillText("soon", 15, 48);
 
     ctx.fillStyle = "black";
     ctx.font = 'bold 20px "Roboto Mono"';

@@ -21,10 +21,32 @@
                 Telechronic: <input type="text" id="telechronic" value="NO"></input>
             </li>
         </ul>
+        Image: <input type="file" id="image"></input><br>
+        <img id="preview"></img><br>
         Notes:<br>
         <textarea id="notes" rows="8" cols="80"></textarea><br><br>
         <button id="submit" onclick="submit()">Done</button>
+
+        <script src="stringstream.js"></script>
         <script type="text/javascript">
+            var hash = new StringStream(window.location.hash);
+            hash.read(); // Purge the "#" symbol
+            document.getElementById("name").value = decodeURIComponent(hash.readUntil("~"));
+            document.getElementById("nicks").value = decodeURIComponent(hash.readUntil("~"));
+            document.getElementById("alignment").value = hash.read();
+            var powers = {
+                "telekenetic": "N/A",
+                "telepathic": "N/A",
+                "telechronic": "N/A"
+            };
+
+            Object.keys(powers).forEach((item, i) => {
+                powers[item] = decodeURIComponent(hash.readUntil("~"));
+            });
+            document.getElementById("notes").value = decodeURIComponent(hash.readUntil("~"));
+            var imgURL = hash.readRemaining();
+            document.getElementById("preview").src = imgURL;
+
             function submit(){
                 var url = "index.html#";
                 url += encodeURIComponent(document.getElementById("name").value);
@@ -39,8 +61,19 @@
                 url += document.getElementById("telechronic").value;
                 url += "~";
                 url += encodeURIComponent(document.getElementById("notes").value);
+                url += "~";
+                url += document.getElementById("preview").src;
                 window.location.href = url;
             }
+            var thing = () => {
+                var reader = new FileReader();
+                reader.addEventListener("load", () => {
+                    document.getElementById("preview").src = reader.result;
+                });
+                reader.readAsDataURL(document.getElementById("image").files[0]);
+            };
+            document.getElementById("image").onchange = thing;
+            thing();
         </script>
     </body>
 </html>
